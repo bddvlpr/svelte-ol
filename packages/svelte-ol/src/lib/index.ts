@@ -1,12 +1,30 @@
 import 'ol/ol.css';
 
-export { default as GraticuleLayer } from './components/layer/GraticuleLayer.svelte';
-export { default as HeatmapLayer } from './components/layer/HeatmapLayer.svelte';
-export { default as ImageLayer } from './components/layer/ImageLayer.svelte';
-export { default as LayerGroup } from './components/layer/LayerGroup.svelte';
-export { default as TileLayer } from './components/layer/TileLayer.svelte';
-export { default as Map } from './components/Map.svelte';
-export { default as View } from './components/View.svelte';
+import Feature from './components/Feature.svelte';
+import Map from './components/Map.svelte';
+import View from './components/View.svelte';
+
+export { Feature, Map, View };
+
+import GraticuleLayer from './components/layer/GraticuleLayer.svelte';
+import HeatmapLayer from './components/layer/HeatmapLayer.svelte';
+import ImageLayer from './components/layer/ImageLayer.svelte';
+import LayerGroup from './components/layer/LayerGroup.svelte';
+import TileLayer from './components/layer/TileLayer.svelte';
+import VectorImageLayer from './components/layer/VectorImageLayer.svelte';
+import VectorLayer from './components/layer/VectorLayer.svelte';
+import VectorTileLayer from './components/layer/VectorTileLayer.svelte';
+
+export {
+  GraticuleLayer,
+  HeatmapLayer,
+  ImageLayer,
+  LayerGroup,
+  TileLayer,
+  VectorImageLayer,
+  VectorLayer,
+  VectorTileLayer
+};
 
 export * from './context.js';
 export * from './layer.js';

@@ -5,7 +5,7 @@
   import { type OLContext, OLContextKey } from '$lib/context.js';
   import { addLayer } from '$lib/layer.js';
   import Image from 'ol/layer/Image.js';
-  import { getContext, type Snippet } from 'svelte';
+  import { getContext, setContext, type Snippet } from 'svelte';
 
   const {
     children,
@@ -31,6 +31,11 @@
       ready = false;
       image.dispose();
     };
+  });
+
+  setContext<OLContext>(OLContextKey, {
+    ...context,
+    getParent: () => image
   });
 </script>
 

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { Options } from 'ol/layer/BaseTile.js';
+  import type { Options } from 'ol/layer/VectorTile.js';
   import type VectorTileSourceType from 'ol/source/VectorTile.js';
 
   import { type OLContext, OLContextKey } from '$lib/context.js';
   import { addLayer } from '$lib/layer.js';
   import VectorTile from 'ol/layer/VectorTile.js';
-  import { getContext, type Snippet } from 'svelte';
+  import { getContext, setContext, type Snippet } from 'svelte';
 
   const {
     children,
@@ -31,6 +31,11 @@
       ready = false;
       vectorTile.dispose();
     };
+  });
+
+  setContext<OLContext>(OLContextKey, {
+    ...context,
+    getParent: () => vectorTile
   });
 </script>
 

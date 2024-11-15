@@ -1,0 +1,30 @@
+name: Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-build-test:
+    name: Lint, Build, and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: true
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+      - name: Lint
+        run: pnpm -w lint
+      - name: Build
+        run: pnpm -r build
+      - name: Test
+        run: pnpm -r test
+      

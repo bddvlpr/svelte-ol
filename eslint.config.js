@@ -33,14 +33,15 @@ export default tseslint.config(
     rules: {
       'perfectionist/sort-objects': 'off',
       'perfectionist/sort-object-types': 'off',
-      'perfectionist/sort-interfaces': 'off'
-    }
-  },
-  {
-    files: ['**/*.svelte'],
-    rules: {
+      'perfectionist/sort-interfaces': 'off',
+      'perfectionist/sort-union-types': [
+        'error',
+        {
+          groups: ['unknown', 'nullish']
+        }
+      ],
       'perfectionist/sort-svelte-attributes': [
-        'warn',
+        'error',
         {
           customGroups: {
             this: 'this',

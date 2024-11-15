@@ -1,44 +1,42 @@
 <script lang="ts">
-  import type FeatureType from 'ol/Feature.js';
-  import type { Options } from 'ol/layer/VectorImage.js';
+  import type { Options } from 'ol/layer/Vector.js';
   import type VectorSourceType from 'ol/source/Vector.js';
-  import type { Snippet } from 'svelte';
 
   import { type OLContext, OLContextKey } from '$lib/context.js';
   import { addLayer } from '$lib/layer.js';
-  import VectorImage from 'ol/layer/VectorImage.js';
-  import { getContext, setContext } from 'svelte';
+  import Vector from 'ol/layer/Vector.js';
+  import { getContext, setContext, type Snippet } from 'svelte';
 
   const {
     children,
     ...options
   }: {
     children?: Snippet;
-  } & Options<FeatureType, VectorSourceType> = $props();
+  } & Options<VectorSourceType> = $props();
 
   const context = getContext<OLContext>(OLContextKey);
   const map = $derived(context.getMap());
   const group = $derived(context.getGroup?.());
 
-  let vectorImage: VectorImage;
+  let vector: Vector;
 
   let ready = $state(false);
 
   $effect(() => {
-    vectorImage = new VectorImage(options);
-    addLayer(map, group, vectorImage);
+    vector = new Vector(options);
+    addLayer(map, group, vector);
     ready = true;
 
     return () => {
-      ready = true;
-      vectorImage.dispose();
+      ready = false;
+      vector.dispose();
     };
   });
 
   setContext<OLContext>(OLContextKey, {
     ...context,
-    getParent: () => vectorImage,
-    getVectorSource: () => vectorImage.getSource()
+    getParent: () => vector,
+    getVectorSource: () => vector.getSource()
   });
 </script>
 

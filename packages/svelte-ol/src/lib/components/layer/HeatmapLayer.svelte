@@ -6,7 +6,7 @@
   import { type OLContext, OLContextKey } from '$lib/context.js';
   import { addLayer } from '$lib/layer.js';
   import Heatmap from 'ol/layer/Heatmap.js';
-  import { getContext, type Snippet } from 'svelte';
+  import { getContext, setContext, type Snippet } from 'svelte';
 
   const {
     children,
@@ -32,6 +32,11 @@
       ready = false;
       heatmap.dispose();
     };
+  });
+
+  setContext<OLContext>(OLContextKey, {
+    ...context,
+    getParent: () => heatmap
   });
 </script>
 

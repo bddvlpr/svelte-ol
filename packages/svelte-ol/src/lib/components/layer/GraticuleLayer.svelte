@@ -4,7 +4,7 @@
   import { type OLContext, OLContextKey } from '$lib/context.js';
   import { addLayer } from '$lib/layer.js';
   import Graticule from 'ol/layer/Graticule.js';
-  import { getContext, type Snippet } from 'svelte';
+  import { getContext, setContext, type Snippet } from 'svelte';
 
   const {
     children,
@@ -30,6 +30,11 @@
       ready = false;
       graticule.dispose();
     };
+  });
+
+  setContext<OLContext>(OLContextKey, {
+    ...context,
+    getParent: () => graticule
   });
 </script>
 
