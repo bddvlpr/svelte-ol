@@ -4,18 +4,22 @@
 
   import { type OLContext, OLContextKey } from '$lib/context.js';
   import Feature from 'ol/Feature.js';
+  import VectorSource from 'ol/source/Vector.js';
   import { getContext } from 'svelte';
 
   const options: Geometry | ObjectWithGeometry = $props();
 
   const context = getContext<OLContext>(OLContextKey);
-  const source = context.getVectorSource?.();
+  const parent = $derived(context.getParent?.());
 
   let feature: Feature;
 
   $effect(() => {
-    if (!source) {
-      throw new Error('No VectorSource parent found. Feature must be a child of a VectorLayer.');
+    const source = parent?.getSource();
+    if (!(source instanceof VectorSource)) {
+      throw new Error(
+        'No VectorSource found. Feature must have a parent Layer with a VectorSource.'
+      );
     }
 
     feature = new Feature(options);

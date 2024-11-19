@@ -3,7 +3,7 @@
   import type VectorTileSourceType from 'ol/source/VectorTile.js';
 
   import { type OLContext, OLContextKey } from '$lib/context.js';
-  import { addLayer } from '$lib/layer.js';
+  import { addLayer } from '$lib/layer.svelte.js';
   import VectorTile from 'ol/layer/VectorTile.js';
   import { getContext, setContext, type Snippet } from 'svelte';
 
@@ -15,8 +15,6 @@
   } & Options<VectorTileSourceType> = $props();
 
   const context = getContext<OLContext>(OLContextKey);
-  const map = $derived(context.getMap());
-  const group = $derived(context.getGroup?.());
 
   let vectorTile: VectorTile;
 
@@ -24,7 +22,7 @@
 
   $effect(() => {
     vectorTile = new VectorTile(options);
-    addLayer(map, group, vectorTile);
+    addLayer(vectorTile);
     ready = true;
 
     return () => {

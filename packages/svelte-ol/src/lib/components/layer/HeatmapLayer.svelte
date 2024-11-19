@@ -4,7 +4,7 @@
   import type VectorSourceType from 'ol/source/Vector.js';
 
   import { type OLContext, OLContextKey } from '$lib/context.js';
-  import { addLayer } from '$lib/layer.js';
+  import { addLayer } from '$lib/layer.svelte.js';
   import Heatmap from 'ol/layer/Heatmap.js';
   import { getContext, setContext, type Snippet } from 'svelte';
 
@@ -16,8 +16,6 @@
   } & Options<FeatureType, VectorSourceType> = $props();
 
   const context = getContext<OLContext>(OLContextKey);
-  const map = $derived(context.getMap());
-  const group = $derived(context.getGroup?.());
 
   let heatmap: Heatmap;
 
@@ -25,7 +23,7 @@
 
   $effect(() => {
     heatmap = new Heatmap(options);
-    addLayer(map, group, heatmap);
+    addLayer(heatmap);
     ready = true;
 
     return () => {

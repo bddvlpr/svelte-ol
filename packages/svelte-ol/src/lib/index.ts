@@ -27,4 +27,4 @@ export {
 };
 
 export * from './context.js';
-export * from './layer.js';
+export * from './layer.svelte.js';

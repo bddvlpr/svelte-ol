@@ -2,7 +2,7 @@
   import type { Options as LayerGroupOptions } from 'ol/layer/Group.js';
 
   import { type OLContext, OLContextKey } from '$lib/context.js';
-  import { addLayer } from '$lib/layer.js';
+  import { addLayer } from '$lib/layer.svelte.js';
   import Group from 'ol/layer/Group.js';
   import { getContext, setContext, type Snippet } from 'svelte';
 
@@ -14,8 +14,6 @@
   } & LayerGroupOptions = $props();
 
   const context = getContext<OLContext>(OLContextKey);
-  const map = $derived(context.getMap());
-  const group = $derived(context.getGroup?.());
 
   let layerGroup: Group;
 
@@ -23,7 +21,7 @@
 
   $effect(() => {
     layerGroup = new Group(options);
-    addLayer(map, group, layerGroup);
+    addLayer(layerGroup);
     ready = true;
 
     return () => {

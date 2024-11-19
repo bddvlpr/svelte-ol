@@ -3,7 +3,7 @@
   import type ImageSourceType from 'ol/source/Image.js';
 
   import { type OLContext, OLContextKey } from '$lib/context.js';
-  import { addLayer } from '$lib/layer.js';
+  import { addLayer } from '$lib/layer.svelte.js';
   import Image from 'ol/layer/Image.js';
   import { getContext, setContext, type Snippet } from 'svelte';
 
@@ -15,8 +15,6 @@
   } & Options<ImageSourceType> = $props();
 
   const context = getContext<OLContext>(OLContextKey);
-  const map = $derived(context.getMap());
-  const group = $derived(context.getGroup?.());
 
   let image: Image<ImageSourceType>;
 
@@ -24,7 +22,7 @@
 
   $effect(() => {
     image = new Image(options);
-    addLayer(map, group, image);
+    addLayer(image);
     ready = true;
 
     return () => {

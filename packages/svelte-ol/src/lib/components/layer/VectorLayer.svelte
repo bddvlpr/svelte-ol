@@ -3,7 +3,7 @@
   import type VectorSourceType from 'ol/source/Vector.js';
 
   import { type OLContext, OLContextKey } from '$lib/context.js';
-  import { addLayer } from '$lib/layer.js';
+  import { addLayer } from '$lib/layer.svelte.js';
   import Vector from 'ol/layer/Vector.js';
   import { getContext, setContext, type Snippet } from 'svelte';
 
@@ -15,8 +15,6 @@
   } & Options<VectorSourceType> = $props();
 
   const context = getContext<OLContext>(OLContextKey);
-  const map = $derived(context.getMap());
-  const group = $derived(context.getGroup?.());
 
   let vector: Vector;
 
@@ -24,7 +22,7 @@
 
   $effect(() => {
     vector = new Vector(options);
-    addLayer(map, group, vector);
+    addLayer(vector);
     ready = true;
 
     return () => {
@@ -35,8 +33,7 @@
 
   setContext<OLContext>(OLContextKey, {
     ...context,
-    getParent: () => vector,
-    getVectorSource: () => vector.getSource()
+    getParent: () => vector
   });
 </script>
 

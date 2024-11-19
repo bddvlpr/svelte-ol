@@ -2,7 +2,7 @@
   import type { Options } from 'ol/layer/Graticule.js';
 
   import { type OLContext, OLContextKey } from '$lib/context.js';
-  import { addLayer } from '$lib/layer.js';
+  import { addLayer } from '$lib/layer.svelte.js';
   import Graticule from 'ol/layer/Graticule.js';
   import { getContext, setContext, type Snippet } from 'svelte';
 
@@ -14,8 +14,6 @@
   } & Options = $props();
 
   const context = getContext<OLContext>(OLContextKey);
-  const map = $derived(context.getMap());
-  const group = $derived(context.getGroup?.());
 
   let graticule: Graticule;
 
@@ -23,7 +21,7 @@
 
   $effect(() => {
     graticule = new Graticule(options);
-    addLayer(map, group, graticule);
+    addLayer(graticule);
     ready = true;
 
     return () => {
